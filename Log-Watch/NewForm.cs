@@ -28,10 +28,9 @@ namespace Log_Watch
         }
         private void TxtBatchSeconds_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Allow only control characters (e.g., backspace), digits, and optionally a single dot for decimals
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true; // Suppress the character
+                e.Handled = true;
             }
         }
         private void InitializeRotationTimer()
@@ -46,11 +45,10 @@ namespace Log_Watch
             _fileWatcher = new FileSystemWatcher();
             _fileWatcher.Path = Path.GetDirectoryName(_currentLogFilePath);
             _fileWatcher.Filter = Path.GetFileName(_currentLogFilePath);
+            _fileWatcher.EnableRaisingEvents = true;
 
             //this will update the change as soon as the file gets modified
             //_fileWatcher.Changed += OnChanged;
-
-            _fileWatcher.EnableRaisingEvents = true;
         }
         private void OnRotationTimer_Tick(object sender, EventArgs e)
         {
@@ -82,7 +80,6 @@ namespace Log_Watch
             if (!string.IsNullOrWhiteSpace(changes))
             {
                 LogChanges(newContent);
-                //DGLogs.Rows.Add(DateTime.Now, changes);
             }
         }
 
